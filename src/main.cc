@@ -151,14 +151,14 @@ void predict(int argc, char** argv) {
 
   std::string infile(argv[3]);
   if (infile == "-") {
-    fasttext.predict(std::cin, k, print_prob);
+    fasttext.displayPredict(std::cin, k, print_prob);
   } else {
     std::ifstream ifs(infile);
     if (!ifs.is_open()) {
       std::cerr << "Input file cannot be opened!" << std::endl;
       exit(EXIT_FAILURE);
     }
-    fasttext.predict(ifs, k, print_prob);
+    fasttext.displayPredict(ifs, k, print_prob);
     ifs.close();
   }
 
@@ -231,8 +231,7 @@ void analogies(int argc, char** argv) {
 }
 
 void train(int argc, char** argv) {
-  std::shared_ptr<Args> a = std::make_shared<Args>();
-  a->parseArgs(argc, argv);
+  std::shared_ptr<Args> a = std::make_shared<Args>(argc, argv);
   FastText fasttext;
   fasttext.train(a);
 }

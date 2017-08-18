@@ -45,12 +45,20 @@ class FastText {
 
     std::atomic<int64_t> tokenCount;
     clock_t start;
-    void signModel(std::ostream&);
-    bool checkModel(std::istream&);
 
+    void signModel(std::ostream&);
     bool quant_;
 
+    struct Exception :public std::exception{
+        explicit Exception(const char* what_arg): d_whatArg(what_arg){}
+        const char *what() const noexcept override { return d_whatArg;}
+        const char* d_whatArg;
+    };
+
   public:
+
+    bool checkModel(std::istream&);
+
     FastText();
 
     void getVector(Vector&, const std::string&) const;
@@ -68,11 +76,16 @@ class FastText {
     std::vector<int32_t> selectEmbeddings(int32_t) const;
     void quantize(std::shared_ptr<Args>);
     void test(std::istream&, int32_t);
-    void predict(std::istream&, int32_t, bool);
-    void predict(
-        std::istream&,
-        int32_t,
-        std::vector<std::pair<real, std::string>>&) const;
+
+
+    typedef std::vector<std::pair<real, int32_t>> type_proba2groupNumber;
+    void predictGroupNumber(std::istream &in, int32_t k, type_proba2groupNumber &) const;
+
+    typedef std::vector<std::pair<real, std::string>> type_proba2grouLabel;
+    void predictGroupLabels(std::istream &, int32_t, type_proba2grouLabel &) const;
+
+    void displayPredict(std::istream &, int32_t, bool);
+
     void wordVectors();
     void sentenceVectors();
     void ngramVectors(std::string);
@@ -85,10 +98,28 @@ class FastText {
     void nn(int32_t);
     void analogies(int32_t);
     void trainThread(int32_t);
+
     void train(std::shared_ptr<Args>);
 
     void loadVectors(std::string);
-    int getDimension() const;
+
+    /**
+     * precondition: this->arg_ initialised
+     */
+    void initDictionnaryBeforeTraining();
+
+    void initInputBeforeTraining();
+    void initOutputBeforeTraining();
+    void training();
+    void saveModelAfterTraining();
+
+    int  getDimension() const { return args_->dim; }
+    void setArgs(std::shared_ptr<Args> args) { args_ = args; }
+    void setDict(FastText &ft){ dict_ = ft.dict_;}
+
+    int geTthread() const {
+        return args_->thread;
+    }
 };
 
 }

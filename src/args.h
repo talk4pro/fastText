@@ -16,51 +16,68 @@
 
 namespace fasttext {
 
-enum class model_name : int {cbow=1, sg, sup};
-enum class loss_name : int {hs=1, ns, softmax};
+    enum class model_name : int {
+        cbow = 1, sg, sup
+    };
+    enum class loss_name : int {
+        hs = 1, ns, softmax
+    };
 
-class Args {
-  public:
-    Args();
-    std::string input;
-    std::string test;
-    std::string output;
-    double lr;
-    int lrUpdateRate;
-    int dim;
-    int ws;
-    int epoch;
-    int minCount;
-    int minCountLabel;
-    int neg;
-    int wordNgrams;
-    loss_name loss;
-    model_name model;
-    int bucket;
-    int minn;
-    int maxn;
-    int thread;
-    double t;
-    std::string label;
-    int verbose;
-    std::string pretrainedVectors;
-    int saveOutput;
+    class Args {
 
-    bool qout;
-    bool retrain;
-    bool qnorm;
-    size_t cutoff;
-    size_t dsub;
+    private:
+        void setDefaultValues(const char *argv_command = nullptr);
 
-    void parseArgs(int, char**);
-    void printHelp();
-    void printBasicHelp();
-    void printDictionaryHelp();
-    void printTrainingHelp();
-    void printQuantizationHelp();
-    void save(std::ostream&);
-    void load(std::istream&);
-};
+    public:
+
+        Args();
+        Args(int, char **);
+
+        std::string input;
+        std::string test;
+        std::string output;
+        double lr;
+        int lrUpdateRate;
+        int dim;
+        int ws;
+        int epoch;
+        int minCount;
+        int minCountLabel;
+        int neg;
+        int wordNgrams;
+        loss_name loss;
+        model_name model;
+        int bucket;
+        int minn;
+        int maxn;
+        int thread;
+        double t;
+        std::string label;
+        int verbose;
+        std::string pretrainedVectors;
+        int saveOutput;
+
+        bool qout;
+        bool retrain;
+        bool qnorm;
+        size_t cutoff;
+        size_t dsub;
+
+        void printHelp();
+
+        void printBasicHelp();
+
+        void printDictionaryHelp();
+
+        void printTrainingHelp();
+
+        void printQuantizationHelp();
+
+        void save(std::ostream &);
+
+        void load(std::istream &);
+
+    };
 
 }
 

@@ -25,8 +25,11 @@ class Vector {
   public:
     int64_t m_;
     real* data_;
+    bool dataShared_;
 
     explicit Vector(int64_t);
+    explicit Vector(int64_t m, real* data);
+
     ~Vector();
 
     real& operator[](int64_t);
