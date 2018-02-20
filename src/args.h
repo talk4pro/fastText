@@ -13,6 +13,7 @@
 #include <istream>
 #include <ostream>
 #include <string>
+#include <vector>
 
 namespace fasttext {
 
@@ -23,62 +24,61 @@ namespace fasttext {
         hs = 1, ns, softmax
     };
 
-    class Args {
+class Args {
 
-    private:
-        void setDefaultValues(const char *argv_command = nullptr);
+private:
 
-    public:
+    void setDefaultValues(const char *argv_command = nullptr);
 
-        Args();
-        Args(int, char **);
+protected:
 
-        std::string input;
-        std::string test;
-        std::string output;
-        double lr;
-        int lrUpdateRate;
-        int dim;
-        int ws;
-        int epoch;
-        int minCount;
-        int minCountLabel;
-        int neg;
-        int wordNgrams;
-        loss_name loss;
-        model_name model;
-        int bucket;
-        int minn;
-        int maxn;
-        int thread;
-        double t;
-        std::string label;
-        int verbose;
-        std::string pretrainedVectors;
-        int saveOutput;
+    std::string lossToString(loss_name) const;
+    std::string boolToString(bool) const;
+    std::string modelToString(model_name) const;
 
-        bool qout;
-        bool retrain;
-        bool qnorm;
-        size_t cutoff;
-        size_t dsub;
+public:
 
-        void printHelp();
+    Args();
 
-        void printBasicHelp();
+    std::string input;
+    std::string output;
+    double lr;
+    int lrUpdateRate;
+    int dim;
+    int ws;
+    int epoch;
+    int minCount;
+    int minCountLabel;
+    int neg;
+    int wordNgrams;
+    loss_name loss;
+    model_name model;
+    int bucket;
+    int minn;
+    int maxn;
+    int thread;
+    double t;
+    std::string label;
+    int verbose;
+    std::string pretrainedVectors;
+    int saveOutput;
 
-        void printDictionaryHelp();
+    bool qout;
+    bool retrain;
+    bool qnorm;
+    size_t cutoff;
+    size_t dsub;
 
-        void printTrainingHelp();
-
-        void printQuantizationHelp();
-
-        void save(std::ostream &);
-
-        void load(std::istream &);
-
-    };
-
+    void parseArgs(const std::vector<std::string>& args);
+    void printHelp();
+    void printBasicHelp();
+    void printDictionaryHelp();
+    void printTrainingHelp();
+    void printQuantizationHelp();
+    void save(std::ostream&);
+    void load(std::istream&);
+    void dump(std::ostream&) const;
+};
 }
 
 #endif
