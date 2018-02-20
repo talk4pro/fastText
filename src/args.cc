@@ -100,7 +100,7 @@ namespace fasttext {
     void Args::parseArgs(const std::vector<std::string>& args) {
 
         setDefaultValues(args[1].c_str());
-        std::string command(argv[1]);
+        std::string command(args[1]);
 
         for (int ai = 2; ai < args.size(); ai += 2) {
             if (args[ai][0] != '-') {

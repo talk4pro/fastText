@@ -19,22 +19,44 @@
 
 namespace fasttext {
 
-Vector::Vector(int64_t m) : data_(m) {}
+    Vector::Vector(int64_t size) {
+        size_ = size;
+        data_ = new real[size];
+        dataShared_=false;
+    }
+
+    Vector::Vector(int64_t size, real *data) {
+      size_ = size;
+        data_ = data;
+        dataShared_=true;
+    }
+
+
+    Vector::~Vector() {
+        if (dataShared_ == false){
+            delete[] data_;
+        }
+    }
+
 
 void Vector::zero() {
-  std::fill(data_.begin(), data_.end(), 0.0);
+  std::fill(data_, data_ + size_, 0.0);
 }
 
 real Vector::norm() const {
   real sum = 0;
-  for (int64_t i = 0; i < size(); i++) {
+  // #pragma omp parallel default(shared)
+  // #pragma omp for reduction(+:sum) {
+  for (int64_t i = 0; i < size_; ++i) {
     sum += data_[i] * data_[i];
   }
+  // } / pragma opm
+
   return std::sqrt(sum);
 }
 
 void Vector::mul(real a) {
-  for (int64_t i = 0; i < size(); i++) {
+  for (int64_t i = 0; i < size_; i++) {
     data_[i] *= a;
   }
 }
@@ -103,21 +125,6 @@ int64_t Vector::argmax() {
   }
   return argmax;
 }
-
-    real &Vector::operator[](int64_t i) {
-        return data_[i];
-    }
-
-    const real &Vector::operator[](int64_t i) const {
-        return data_[i];
-    }
-    real &Vector::operator[](int64_t i) {
-        return data_[i];
-    }
-
-    const real &Vector::operator[](int64_t i) const {
-        return data_[i];
-    }
 
     std::ostream& operator<<(std::ostream& os, const Vector& v)
 {
