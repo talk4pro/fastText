@@ -1,13 +1,12 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the BSD-style license found in the
-# LICENSE file in the root directory of this source tree. An additional grant
-# of patent rights can be found in the PATENTS file in the same directory.
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
 
 # NOTE: The purpose of this file is not to accumulate all useful utility
 # functions. This file should contain very commonly used and requested functions
-# (such as test). If you think you have a function at that level, please create
+# (such as test_google). If you think you have a function at that level, please create
 # an issue and we will happily review your suggestion. This file is also not supposed
 # to pull in dependencies outside of numpy/scipy without very good reasons. For
 # example, this file should not use sklearn and matplotlib to produce a t-sne
@@ -21,10 +20,10 @@ from __future__ import unicode_literals
 import numpy as np
 
 
-# TODO: Add example on reproducing model.test with util.test and model.get_line
+# TODO: Add example on reproducing model.test_google with util.test_google and model.get_line
 def test(predictions, labels, k=1):
     """
-    Return precision and recall modeled after fasttext's test
+    Return precision and recall modeled after fasttext's test_google
     """
     precision = 0.0
     nexamples = 0

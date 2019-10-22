@@ -2,70 +2,79 @@
  * Copyright (c) 2016-present, Facebook, Inc.
  * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 #pragma once
 
 #include <cstdint>
 #include <ostream>
+#include <vector>
 
 #include "real.h"
 
 namespace fasttext {
 
 class Matrix;
-class QMatrix;
 
 class Vector {
 
-  public:
-    int64_t size_;
-    real* data_;
-    bool dataShared_;
 
-    explicit Vector(int64_t);
-    explicit Vector(int64_t m, real* data);
-    Vector(const Vector&) = delete;
-    Vector& operator=(const Vector&) = delete;
 
-    ~Vector();
+ public:
 
-    real* data() {
-      return data_;
-    }
+  explicit Vector(int64_t);
+  Vector(const Vector&) = default;
+  Vector(Vector&&) noexcept = default;
+  Vector& operator=(const Vector&) = default;
+  Vector& operator=(Vector&&) = default;
 
-    const real* data() const {
-      return data_;
-    }
+  inline real* data() {
+    return data_.data();
+  }
 
-    real& operator[](int64_t i) {
-      return data_[i];
-    }
+  inline const real* data() const {
+    return data_.data();
+  }
 
-    const real& operator[](int64_t i) const {
-      return data_[i];
-    }
+  inline real& operator[](int64_t i) {
+    return data_[i];
+  }
 
-    int64_t size() const {
-      return size_;
-    }
+  inline const real& operator[](int64_t i) const {
+    return data_[i];
+  }
 
-    void zero();
-    void mul(real);
-    real norm() const;
-    void addVector(const Vector& source);
-    void addVector(const Vector&, real);
-    void addRow(const Matrix&, int64_t);
-    void addRow(const QMatrix&, int64_t);
-    void addRow(const Matrix&, int64_t, real);
-    void mul(const QMatrix&, const Vector&);
-    void mul(const Matrix&, const Vector&);
-    int64_t argmax();
+  inline int64_t size() const {
+    return data_.size();
+  }
+
+  void zero();
+  void mul(real);
+  real norm() const;
+  void addVector(const Vector& source);
+  void addVector(const Vector&, real);
+  void addRow(const Matrix&, int64_t);
+  void addRow(const Matrix&, int64_t, real);
+  void mul(const Matrix&, const Vector&);
+  int64_t argmax();
+
+  // for WordEmbedder.cc
+  typedef std::vector<real> type_data;
+  typedef type_data::const_iterator const_iterator;
+
+  const_iterator begin() const { return data_.begin(); }
+  const_iterator end() const { return data_.end(); }
+
+
+protected:
+
+    type_data data_;
+
+
 };
 
 std::ostream& operator<<(std::ostream&, const Vector&);
 
-}
+} // namespace fasttext

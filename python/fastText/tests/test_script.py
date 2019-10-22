@@ -1,11 +1,9 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the BSD-style license found in the
-# LICENSE file in the root directory of this source tree. An additional grant
-# of patent rights can be found in the PATENTS file in the same directory.
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
 
-from __future__ import absolute_import
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -154,7 +152,7 @@ def read_labels(data_file):
 
 
 class TestFastTextUnitPy(unittest.TestCase):
-    # TODO: Unit test copy behavior of fasttext
+    # TODO: Unit test_google copy behavior of fasttext
 
     def gen_test_get_vector(self, kwargs):
         # Confirm if no subwords, OOV is zero, confirm min=10 means words < 10 get zeros
@@ -455,8 +453,8 @@ class TestFastTextUnitPy(unittest.TestCase):
         self.assertTrue(gotError)
 
 
-# Generate a supervised test case
-# The returned function will be set as an attribute to a test class
+# Generate a supervised test_google case
+# The returned function will be set as an attribute to a test_google class
 def gen_sup_test(configuration, data_dir):
     def sup_test(self):
         def get_path_size(path):
@@ -496,10 +494,10 @@ def gen_sup_test(configuration, data_dir):
             data_dir, configuration["args"]["input"]
         )
         configuration["quant_args"]["input"] = configuration["args"]["input"]
-        configuration["test"]["data"] = os.path.join(
-            data_dir, configuration["test"]["data"]
+        configuration["test_google"]["data"] = os.path.join(
+            data_dir, configuration["test_google"]["data"]
         )
-        configuration["quant_test"]["data"] = configuration["test"]["data"]
+        configuration["quant_test"]["data"] = configuration["test_google"]["data"]
         output = os.path.join(tempfile.mkdtemp(), configuration["dataset"])
         print()
         model = train_supervised(**configuration["args"])
@@ -507,7 +505,7 @@ def gen_sup_test(configuration, data_dir):
         check(
             model,
             output + ".bin",
-            configuration["test"],
+            configuration["test_google"],
             False,
             msg_prefix="Supervised: "
         )

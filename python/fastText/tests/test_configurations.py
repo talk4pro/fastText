@@ -1,9 +1,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the BSD-style license found in the
-# LICENSE file in the root directory of this source tree. An additional grant
-# of patent rights can be found in the PATENTS file in the same directory.
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
 
 from __future__ import absolute_import
 from __future__ import division
@@ -13,7 +12,7 @@ from __future__ import unicode_literals
 import multiprocessing
 
 # This script represents a collection of integration tests
-# Each integration test comes with a full set of parameters,
+# Each integration test_google comes with a full set of parameters,
 # a dataset, and expected metrics.
 # These configurations can be used by various fastText apis
 # to confirm some level of correctness.
@@ -63,12 +62,12 @@ def flickr_job(thread=None):
         "qout": True
     }
     config["quant_args"]["input"] = config["args"]["input"]
-    config["test"] = {
+    config["test_google"] = {
         "n": 647224,
         "p1": 0.470,
         "r1": 0.071,
         "size": 12060039727,
-        "data": "YFCC100M/test",
+        "data": "YFCC100M/test_google",
     }
     # One quant example (to illustrate slack): 0.344, 0.0528, 64506972
     config["quant_test"] = {
@@ -76,7 +75,7 @@ def flickr_job(thread=None):
         "p1": 0.300,
         "r1": 0.0450,
         "size": 70000000,
-        "data": "YFCC100M/test",
+        "data": "YFCC100M/test_google",
     }
     return config
 
@@ -90,7 +89,7 @@ def langid_job1(thread=None):
     config["args"]["input"] = "langid.train"
     config["quant_args"] = {"qnorm": True, "cutoff": 50000, "retrain": True}
     config["quant_args"]["input"] = config["args"]["input"]
-    config["test"] = {
+    config["test_google"] = {
         "n": 10000,
         "p1": 0.985,
         "r1": 0.985,
@@ -103,8 +102,8 @@ def langid_job1(thread=None):
         "r1": 0.97,
         "size": 1000000,
     }
-    config["quant_test"]["n"] = config["test"]["n"]
-    config["quant_test"]["data"] = config["test"]["data"]
+    config["quant_test"]["n"] = config["test_google"]["n"]
+    config["quant_test"]["data"] = config["test_google"]["data"]
     return config
 
 
@@ -131,7 +130,7 @@ def cooking_job1(thread=None):
     config["args"]["input"] = "cooking.train"
     config["quant_args"] = {"qnorm": True, "cutoff": 50000, "retrain": True}
     config["quant_args"]["input"] = config["args"]["input"]
-    config["test"] = {
+    config["test_google"] = {
         "n": 3000,
         "p1": 0.59,
         "r1": 0.25,
@@ -144,8 +143,8 @@ def cooking_job1(thread=None):
         "r1": 0.20,
         "size": 4000000,
     }
-    config["quant_test"]["n"] = config["test"]["n"]
-    config["quant_test"]["data"] = config["test"]["data"]
+    config["quant_test"]["n"] = config["test_google"]["n"]
+    config["quant_test"]["data"] = config["test_google"]["data"]
     return config
 
 
@@ -217,16 +216,16 @@ def get_supervised_models(thread=None, verbose=1):
             "p1": sup_job_p1[i],
             "r1": sup_job_r1[i],
             "size": sup_job_size[i],
-            "data": sup_job_dataset[i] + ".test",
+            "data": sup_job_dataset[i] + ".test_google",
         }
         quant_test = {
             "n": sup_job_n[i],
             "p1": sup_job_quant_p1[i],
             "r1": sup_job_quant_r1[i],
             "size": sup_job_quant_size[i],
-            "data": sup_job_dataset[i] + ".test",
+            "data": sup_job_dataset[i] + ".test_google",
         }
-        configuration["test"] = test
+        configuration["test_google"] = test
         configuration["quant_test"] = quant_test
         configurations.append(configuration)
     configurations.append(flickr_job())

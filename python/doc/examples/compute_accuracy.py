@@ -3,9 +3,8 @@
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
-# This source code is licensed under the BSD-style license found in the
-# LICENSE file in the root directory of this source tree. An additional grant
-# of patent rights can be found in the PATENTS file in the same directory.
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
 
 from __future__ import absolute_import
 from __future__ import division
@@ -68,7 +67,7 @@ def print_compute_accuracy_score(
             question,
             correct,
             num_qs,
-            correct / float(num_qs) * 100,
+            correct / float(num_qs) * 100 if num_qs > 0 else 0,
             total_accuracy * 100,
             semantic_accuracy * 100,
             syntactic_accuracy * 100,
@@ -148,7 +147,7 @@ if __name__ == "__main__":
             question,
             correct,
             num_qs,
-            total_correct / float(total_qs),
+            total_correct / float(total_qs) if total_qs > 0 else 0,
             total_se_correct / float(total_se_qs) if total_se_qs > 0 else 0,
             total_sy_correct / float(total_sy_qs) if total_sy_qs > 0 else 0,
         )
@@ -156,5 +155,9 @@ if __name__ == "__main__":
 
     print(
         "Questions seen / total: {0} {1}   {2:.2f} %".
-        format(total_qs, total_num_lines, total_qs / total_num_lines * 100)
+        format(
+            total_qs,
+            total_num_lines,
+            total_qs / total_num_lines * 100 if total_num_lines > 0 else 0,
+        )
     )

@@ -1,6 +1,7 @@
-# fastText
+# fastText python
 
 [fastText](https://fasttext.cc/) is a library for efficient learning of word representations and sentence classification.
+This folder contains python bindings of the fastText library.
 
 ## Requirements
 
@@ -16,7 +17,7 @@ You will need
 * [NumPy](http://www.numpy.org/) & [SciPy](https://www.scipy.org/)
 * [pybind11](https://github.com/pybind/pybind11)
 
-## Building fastText
+## Building fastText for python
 
 The easiest way to install fastText is to use [pip](https://pip.pypa.io/en/stable/).
 
@@ -63,9 +64,8 @@ DESCRIPTION
     # Copyright (c) 2017-present, Facebook, Inc.
     # All rights reserved.
     #
-    # This source code is licensed under the BSD-style license found in the
-    # LICENSE file in the root directory of this source tree. An additional grant
-    # of patent rights can be found in the PATENTS file in the same directory.
+    # This source code is licensed under the MIT license found in the
+    # LICENSE file in the root directory of this source tree.
 
 FUNCTIONS
     load_model(path)
@@ -78,7 +78,7 @@ FUNCTIONS
 
 ## IMPORTANT: Preprocessing data / enconding conventions
 
-In general it is important to properly preprocess your data. In particular our example scripts in the [root folder](https://github.com/facebookresearch/fastText) do this. 
+In general it is important to properly preprocess your data. In particular our example scripts in the [root folder](https://github.com/facebookresearch/fastText) do this.
 
 fastText assumes UTF-8 encoded text. All text must be [unicode for Python2](https://docs.python.org/2/library/functions.html#unicode) and [str for Python3](https://docs.python.org/3.5/library/stdtypes.html#textseq). The passed text will be [encoded as UTF-8 by pybind11](https://pybind11.readthedocs.io/en/master/advanced/cast/strings.html?highlight=utf-8#strings-bytes-and-unicode-conversions) before passed to the fastText C++ library. This means it is important to use UTF-8 encoded text when building a model. On Unix-like systems you can convert text using [iconv](https://en.wikipedia.org/wiki/Iconv).
 

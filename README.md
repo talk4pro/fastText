@@ -1,6 +1,10 @@
+# fastText
+[fastText](https://fasttext.cc/) is a library for efficient learning of word representations and sentence classification.
+
+[![CircleCI](https://circleci.com/gh/facebookresearch/fastText/tree/master.svg?style=svg)](https://circleci.com/gh/facebookresearch/fastText/tree/master)
+
 ## Table of contents
 
-* [Introduction](#introduction)
 * [Resources](#resources)
    * [Models](#models)
    * [Supplementary data](#supplementary-data)
@@ -24,15 +28,11 @@
 * [Join the fastText community](#join-the-fasttext-community)
 * [License](#license)
 
-## Introduction
-
-[fastText](https://fasttext.cc/) is a library for efficient learning of word representations and sentence classification.
-
 ## Resources
 
 ### Models
 - Recent state-of-the-art [English word vectors](https://fasttext.cc/docs/en/english-vectors.html).
-- Word vectors for [294 languages trained on Wikipedia](https://github.com/facebookresearch/fastText/blob/master/pretrained-vectors.md).
+- Word vectors for [157 languages trained on Wikipedia and Crawl](https://github.com/facebookresearch/fastText/blob/master/docs/crawl-vectors.md).
 - Models for [language identification](https://fasttext.cc/docs/en/language-identification.html#content) and [various supervised tasks](https://fasttext.cc/docs/en/supervised-models.html#content).
 
 ### Supplementary data
@@ -48,7 +48,7 @@ We also provide a [cheatsheet](https://fasttext.cc/docs/en/cheatsheet.html#conte
 
 ## Requirements
 
-We are continously building and testing our library, CLI and Python bindings under various docker images using [circleci](https://circleci.com/).
+We are continuously building and testing our library, CLI and Python bindings under various docker images using [circleci](https://circleci.com/).
 
 Generally, **fastText** builds on modern Mac OS and Linux distributions.
 Since it uses some C++11 features, it requires a compiler with good C++11 support.
@@ -59,7 +59,7 @@ These include :
 Compilation is carried out using a Makefile, so you will need to have a working **make**.
 If you want to use **cmake** you need at least version 2.8.9.
 
-One of the oldest distributions we successfully built and tested the CLI under is [Debian wheezy](https://www.debian.org/releases/wheezy/).
+One of the oldest distributions we successfully built and tested the CLI under is [Debian jessie](https://www.debian.org/releases/jessie/).
 
 For the word-similarity evaluation script you will need:
 
@@ -89,12 +89,12 @@ There is also the master branch that contains all of our most recent work, but c
 ### Building fastText using make (preferred)
 
 ```
-$ wget https://github.com/facebookresearch/fastText/archive/v0.1.0.zip
-$ unzip v0.1.0.zip
-$ cd fastText-0.1.0
+$ wget https://github.com/facebookresearch/fastText/archive/v0.2.0.zip
+$ unzip v0.2.0.zip
+$ cd fastText-0.2.0
 $ make
 ```
- 
+
 This will produce object files for all the classes as well as the main binary `fasttext`.
 If you do not plan on using the default system-wide compiler, update the two macros defined at the beginning of the Makefile (CC and INCLUDES).
 
@@ -243,8 +243,8 @@ The following arguments are optional:
   -verbose            verbosity level [2]
 
 The following arguments for the dictionary are optional:
-  -minCount           minimal number of word occurences [1]
-  -minCountLabel      minimal number of label occurences [0]
+  -minCount           minimal number of word occurrences [1]
+  -minCountLabel      minimal number of label occurrences [0]
   -wordNgrams         max length of word ngram [1]
   -bucket             number of buckets [2000000]
   -minn               min length of char ngram [0]
@@ -283,11 +283,14 @@ Please cite [1](#enriching-word-vectors-with-subword-information) if using this 
 [1] P. Bojanowski\*, E. Grave\*, A. Joulin, T. Mikolov, [*Enriching Word Vectors with Subword Information*](https://arxiv.org/abs/1607.04606)
 
 ```
-@article{bojanowski2016enriching,
+@article{bojanowski2017enriching,
   title={Enriching Word Vectors with Subword Information},
   author={Bojanowski, Piotr and Grave, Edouard and Joulin, Armand and Mikolov, Tomas},
-  journal={arXiv preprint arXiv:1607.04606},
-  year={2016}
+  journal={Transactions of the Association for Computational Linguistics},
+  volume={5},
+  year={2017},
+  issn={2307-387X},
+  pages={135--146}
 }
 ```
 
@@ -296,11 +299,14 @@ Please cite [1](#enriching-word-vectors-with-subword-information) if using this 
 [2] A. Joulin, E. Grave, P. Bojanowski, T. Mikolov, [*Bag of Tricks for Efficient Text Classification*](https://arxiv.org/abs/1607.01759)
 
 ```
-@article{joulin2016bag,
+@InProceedings{joulin2017bag,
   title={Bag of Tricks for Efficient Text Classification},
   author={Joulin, Armand and Grave, Edouard and Bojanowski, Piotr and Mikolov, Tomas},
-  journal={arXiv preprint arXiv:1607.01759},
-  year={2016}
+  booktitle={Proceedings of the 15th Conference of the European Chapter of the Association for Computational Linguistics: Volume 2, Short Papers},
+  month={April},
+  year={2017},
+  publisher={Association for Computational Linguistics},
+  pages={427--431},
 }
 ```
 
@@ -330,4 +336,4 @@ See the CONTRIBUTING file for information about how to help out.
 
 ## License
 
-fastText is BSD-licensed. We also provide an additional patent grant.
+fastText is MIT-licensed.
