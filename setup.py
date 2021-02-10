@@ -88,7 +88,7 @@ def has_flag(compiler, flags):
     """
     import tempfile
     with tempfile.NamedTemporaryFile('w', suffix='.cpp') as f:
-        f.write('int main (int argc, char **argv) { return 0; }')
+        f.write('int xyz_2_hot_encoding (int argc, char **argv) { return 0; }')
         try:
             compiler.compile([f.name], extra_postargs=flags)
         except setuptools.distutils.errors.CompileError:
